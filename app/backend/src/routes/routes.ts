@@ -1,11 +1,9 @@
-import { Request, Response, Router } from 'express';
-import Clubs from '../database/models/Clubs';
+import { Router } from 'express';
+import loginFactory from '../factories/login.factory';
+
+const loginController = loginFactory();
 
 const router = Router();
-router.route('/allClubs')
-  .get(async (req: Request, res: Response) => {
-    const allTeams = await Clubs.findAll();
-    res.status(200).json(allTeams);
-  });
+router.get('/', loginController.startLogin);
 
 export default router;

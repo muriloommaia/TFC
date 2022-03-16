@@ -1,4 +1,6 @@
 import * as express from 'express';
+// import 'express-async-errors';
+import errorMiddleware from './middlewares/error';
 import router from './routes/routes';
 
 class App {
@@ -23,6 +25,7 @@ class App {
     this.app.use(accessControl);
     this.app.use(express.json());
     this.app.use(router);
+    this.app.use(errorMiddleware);
     // ...
   }
 

@@ -8,11 +8,14 @@ const errorMiddleware = (
   next: NextFunction,
 ) => {
   const { name, message } = err;
+  console.log('nameError', message);
   switch (name) {
     case 'ValidationError':
       res.status(StatusCode.badRequest).json({ message });
       break;
-
+    case 'BadRequestError':
+      res.status(StatusCode.badRequest).json({ message });
+      break;
     default:
       res.status(StatusCode.internalServerError).json({
         message: MessagesStatus.internalServerError,

@@ -1,9 +1,8 @@
-import { Model, DataTypes } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import db from '.';
-import { IModelSequelizeUsers } from '../interfaces/ModelsSequelize';
 // import OtherModel from './OtherModel';
 
-class Users extends Model implements IModelSequelizeUsers {
+class Users extends Model {
   username: string;
 
   role: string;
