@@ -9,10 +9,8 @@ export const authenticateToken = async (
   next: NextFunction,
 ): Promise<void> => {
   const { authorization: token } = req.headers;
-  console.log(token);
   if (!token) throw new BadRequestError('Token not found');
-  const verify = await verifyToken(token);
-  if (!verify) throw new BadRequestError('Token invalid');
+  await verifyToken(token);
   next();
 };
 

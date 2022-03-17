@@ -44,3 +44,5 @@ export const findEmailCorrect = {
 }
 
 export const findEmailWrong = null;
+
+export const invalidToken = 'eyJhbGciOiJII1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJVc2VyIiwicm9sZSI6InVzZXIiLCJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2NDc1NTYyODEsImV4cCI6MTY0NzY0MjY4MX0.Ad2zi6SkQhEaisj9X7oNI_kR2GFf-2OEB8ZnqT-I2w';

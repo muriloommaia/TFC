@@ -18,6 +18,5 @@ export const generateToken = async (user: Omit<User, 'password'>) => {
 export const verifyToken = async (token: string): Promise<Omit<User, 'password'>> => {
   const secret = await readAsync();
   const tokenGenerate = jwt.verify(token, secret) as Omit<User, 'password'>;
-  console.log(tokenGenerate);
   return tokenGenerate;
 };
