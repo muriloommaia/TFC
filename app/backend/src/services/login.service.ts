@@ -1,5 +1,5 @@
 import { LoginUser } from '../domain';
-import BadRequestError from '../erros/bad.request.error';
+import UnauthorizedError from '../erros/unauthorized.error';
 import LoginModels from '../models/login.model';
 import { decryptPass } from '../utils/bcrypt';
 import { generateToken } from '../utils/JWT/jwtToken';
@@ -13,12 +13,12 @@ export default class LoginServices {
     const { email, password: pass } = body;
     const findEmail = await this.model.findEmail(email);
     if (!findEmail) {
-      throw new BadRequestError(MessagesStatus.incorrectEmail);
+      throw new UnauthorizedError(MessagesStatus.incorrectEmail);
     }
     const { password: hash, ...user } = findEmail;
     const truePass = await decryptPass(pass, hash);
     if (!truePass) {
-      throw new BadRequestError(MessagesStatus.incorrectPassword);
+      throw new UnauthorizedError(MessagesStatus.incorrectPassword);
     }
     const token = await generateToken(user);
     return {
