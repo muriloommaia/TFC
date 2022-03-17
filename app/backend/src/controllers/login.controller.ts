@@ -10,9 +10,4 @@ export default class LoginController {
     const { status, message } = await this.service.loginUser(validate);
     res.status(status).json(message);
   }
-
-  test(_req: Request, _res: Response, _next: NextFunction) {
-    console.log(this);
-    console.log('teste');
-  }
 }
