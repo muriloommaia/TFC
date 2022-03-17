@@ -5,16 +5,12 @@ import { verifyLogin } from '../utils/JOI/validationJOI';
 export default class LoginController {
   constructor(readonly service: LoginServices) { }
 
-  async startLogin(req: Request, res: Response, next: NextFunction): Promise<void> {
-    try {
-      const validate = await verifyLogin(req.body);
-      const findEmail = await this.service.loginUser(validate);
-      res.status(findEmail.status).json({
-        message: findEmail.message,
-      });
-    } catch (error) {
-      next(error);
-    }
+  async startLogin(req: Request, res: Response, _next: NextFunction): Promise<void> {
+    const validate = await verifyLogin(req.body);
+    const findEmail = await this.service.loginUser(validate);
+    res.status(findEmail.status).json({
+      message: findEmail.message,
+    });
   }
 
   test(_req: Request, _res: Response, _next: NextFunction) {

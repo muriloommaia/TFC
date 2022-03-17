@@ -5,8 +5,8 @@ const loginController = loginFactory();
 // loginController.test();
 
 const router = Router();
-router.post('/login', (req, res, next) => {
-  loginController.startLogin(req, res, next);
+router.post('/login', async (req, res, next) => {
+  await loginController.startLogin(req, res, next);
 });
 
 export default router;
