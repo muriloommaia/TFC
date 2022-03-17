@@ -12,4 +12,4 @@ export type User = Entity & {
   password: string
 };
 
-export type AddUser = Omit<User, keyof Entity>;
+export type LoginUser = Omit<User, keyof Entity>;

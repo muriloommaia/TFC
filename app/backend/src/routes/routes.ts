@@ -2,8 +2,11 @@ import { Router } from 'express';
 import loginFactory from '../factories/login.factory';
 
 const loginController = loginFactory();
+// loginController.test();
 
 const router = Router();
-router.get('/', loginController.startLogin);
+router.post('/login', (req, res, next) => {
+  loginController.startLogin(req, res, next);
+});
 
 export default router;

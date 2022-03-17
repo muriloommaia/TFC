@@ -1,6 +1,6 @@
-import LoginController from '../controller/login.controller';
-import LoginModels from '../model/login.model';
-import LoginServices from '../service/login.service';
+import LoginController from '../controllers/login.controller';
+import LoginModels from '../models/login.model';
+import LoginServices from '../services/login.service';
 
 const loginFactory = (): LoginController => {
   const loginModel = new LoginModels();
