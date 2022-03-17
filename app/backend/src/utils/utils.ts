@@ -10,6 +10,8 @@ enum MessagesStatus {
   incorrectEmail = 'Incorrect email or password',
   incorrectPassword = 'Incorrect email or password',
   allFieldsFilled = 'All fields must be filled',
+  tokenNotFound = 'Token not found',
+  invalidToken = 'invalid token',
 }
 
 export {

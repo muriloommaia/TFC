@@ -5,7 +5,7 @@ import { app } from '../app';
 import Users from '../database/models/Users';
 import { User } from '../domain';
 import { MessagesStatus, StatusCode } from '../utils/utils';
-import { correctLogin, findEmailCorrect, findEmailWrong, loginWithoutEmail, loginWithoutPass, wrongLoginEmail, wrongLoginPass, wrongLoginPassLength } from './mocks/loginMocks';
+import { correctLogin, findEmailCorrect, findEmailWrong, invalidToken, loginWithoutEmail, loginWithoutPass, wrongLoginEmail, wrongLoginPass, wrongLoginPassLength } from './mocks/loginMocks';
 import chaiHttp = require('chai-http');
 import Sinon = require('sinon');
 
@@ -119,3 +119,52 @@ describe('Testes da rota /login', () => {
     });
   })
 });
+
+describe('Test rota login/validate', () => {
+  let chaiHttpResponse: Response;
+  let token: string;
+  describe('Verification login', () => {
+
+    before(async () => {
+      Sinon
+        .stub(Users, "findOne")
+        .resolves(findEmailCorrect as unknown as Model<User>);
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send(correctLogin);
+
+      token = chaiHttpResponse.body.token;
+    });
+
+    after(() => {
+      (Users.findOne as sinon.SinonStub).restore();
+    })
+    it('Verify status is ok when all is wright', async () => {
+      chaiHttpResponse = await chai
+        .request(app)
+        .get('/login/validate')
+        .set('Authorization', `${token}`);
+      expect(chaiHttpResponse.status).to.be.equal(StatusCode.ok);
+      expect(chaiHttpResponse.text).to.be.a.equal('user');
+    });
+    it('Verify status is 400 when the Authorization doesn\'t exist', async () => {
+      chaiHttpResponse = await chai
+        .request(app)
+        .get('/login/validate');
+      expect(chaiHttpResponse.status).to.be.equal(StatusCode.badRequest);
+      expect(chaiHttpResponse.body).to.be.a.property('message');
+      expect(chaiHttpResponse.body).to.be.a.property('message').to.be.equal(MessagesStatus.tokenNotFound);
+    });
+    it('Verify status is 400 when the Authorization exist but it\'s wrong', async () => {
+      token = invalidToken;
+      chaiHttpResponse = await chai
+        .request(app)
+        .get('/login/validate')
+        .set('Authorization', token);
+      expect(chaiHttpResponse.status).to.be.equal(StatusCode.badRequest);
+      expect(chaiHttpResponse.body).to.be.a.property('message');
+      expect(chaiHttpResponse.body).to.be.a.property('message').to.be.equal(MessagesStatus.invalidToken);
+    });
+  })
+})
