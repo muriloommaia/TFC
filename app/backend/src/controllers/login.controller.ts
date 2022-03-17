@@ -7,10 +7,8 @@ export default class LoginController {
 
   async startLogin(req: Request, res: Response, _next: NextFunction): Promise<void> {
     const validate = await verifyLogin(req.body);
-    const findEmail = await this.service.loginUser(validate);
-    res.status(findEmail.status).json({
-      message: findEmail.message,
-    });
+    const { status, message } = await this.service.loginUser(validate);
+    res.status(status).json(message);
   }
 
   test(_req: Request, _res: Response, _next: NextFunction) {

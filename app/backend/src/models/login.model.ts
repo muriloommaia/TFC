@@ -4,11 +4,6 @@ import Users from '../database/models/Users';
 import { User } from '../domain';
 
 export default class LoginModels {
-  // private UserModel: Users;
-  // constructor() {
-  //   this.UserModel = Users
-  // }
-
   async findEmail(email: string): Promise<User > {
     return await Users.findOne({
       where: { email },

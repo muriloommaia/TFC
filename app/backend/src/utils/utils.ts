@@ -6,6 +6,8 @@ enum StatusCode {
 
 enum MessagesStatus {
   internalServerError = 'Internal server error',
+  incorrectEmail = 'Incorrect email or password',
+  incorrectPassword = 'Incorrect email or password',
 }
 
 export {

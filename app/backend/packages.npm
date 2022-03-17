@@ -1,3 +1,4 @@
-bcrypt
 express-async-errors
 joi
+bcryptjs
+--save-dev @types/bcryptjs
