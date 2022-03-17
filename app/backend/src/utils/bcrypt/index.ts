@@ -5,8 +5,10 @@ export const decryptPass = async (password: string, hash: string) => {
   return compare;
 };
 
-export const encrypt = async (password: string) => {
-  const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(password, salt);
-  return hash;
-};
+export const defaultValue = 1;
+
+// export const encrypt = async (password: string) => {
+//   const salt = bcrypt.genSaltSync(10);
+//   const hash = bcrypt.hashSync(password, salt);
+//   return hash;
+// };

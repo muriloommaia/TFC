@@ -3,16 +3,12 @@ import { MessagesStatus, StatusCode } from '../utils/utils';
 
 const errorMiddleware = (err: Error, _req: Request, res: Response, next: NextFunction) => {
   const { name, message } = err;
+  console.log(name, message);
   switch (name) {
-    case 'ValidationError':
-      res.status(StatusCode.unauthorized).json({ message });
-      break;
-    case 'BadRequestError':
-      res.status(StatusCode.badRequest).json({ message });
-      break;
-    case 'UnauthorizedError':
-      res.status(StatusCode.unauthorized).json({ message });
-      break;
+    case 'ValidationError': return res.status(StatusCode.unauthorized).json({ message });
+    case 'JsonWebTokenError': return res.status(StatusCode.badRequest).json({ message });
+    case 'BadRequestError': return res.status(StatusCode.badRequest).json({ message });
+    case 'UnauthorizedError': return res.status(StatusCode.unauthorized).json({ message });
     default:
       res.status(StatusCode.internalServerError).json({
         message: MessagesStatus.internalServerError,

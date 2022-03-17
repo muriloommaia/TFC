@@ -7,3 +7,8 @@ export type ResponseLogin = {
     token: string,
   }
 };
+
+export type NormalResponse = {
+  status: number,
+  message: string,
+};
