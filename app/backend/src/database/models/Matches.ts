@@ -1,4 +1,4 @@
-import { Model, DataTypes } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import db from '.';
 import { IModelSequelizeMatches } from '../interfaces/ModelsSequelize';
 // import OtherModel from './OtherModel';
@@ -38,6 +38,7 @@ Matches.init({
   sequelize: db,
   // modelName: 'example',
   timestamps: false,
+  tableName: 'matchs',
 });
 
 /**
