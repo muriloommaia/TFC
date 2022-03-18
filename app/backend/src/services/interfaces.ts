@@ -1,4 +1,4 @@
-import { ClubsType, User } from '../domain';
+import { User } from '../domain';
 
 type Indexable = {
   status: number;
@@ -15,6 +15,6 @@ export type NormalResponse = Indexable & {
   message: string,
 };
 
-export type ClubsResponse = Indexable & {
-  message: ClubsType[],
+export type ResponseService<T> = Indexable & {
+  message: T,
 };

@@ -8,4 +8,10 @@ export default class ClubsController {
     const { status, message } = await this.service.findAll();
     res.status(status).json(message);
   }
+
+  async findById(req: Request, res: Response, _next: NextFunction): Promise<void> {
+    const { id } = req.params;
+    const { status, message } = await this.service.findById(+id);
+    res.status(status).json(message);
+  }
 }

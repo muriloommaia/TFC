@@ -7,4 +7,8 @@ export default class ClubsModel {
   async findAll(): Promise<ClubsType[]> {
     return await Clubs.findAll() as unknown as ClubsType[];
   }
+
+  async findById(id: number): Promise<ClubsType> {
+    return await Clubs.findByPk(id) as unknown as ClubsType;
+  }
 }

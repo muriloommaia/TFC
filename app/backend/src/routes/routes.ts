@@ -21,4 +21,7 @@ router.get('/clubs', async (req, res, next) => {
   await clubsController.findAll(req, res, next);
 });
 
+router.get('/clubs/:id', async (req, res, next) => {
+  await clubsController.findById(req, res, next);
+});
 export default router;
