@@ -1,3 +1,5 @@
+import { IModelSequelizeClubs } from './database/interfaces/ModelsSequelize';
+
 export type Indexable = {
   id: number
 };
@@ -15,3 +17,5 @@ export type User = Entity & {
 };
 
 export type LoginUser = Omit<User, keyof Entity>;
+
+export type ClubsType = IModelSequelizeClubs;

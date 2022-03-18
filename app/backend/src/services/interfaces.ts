@@ -1,14 +1,20 @@
-import { User } from '../domain';
+import { ClubsType, User } from '../domain';
 
-export type ResponseLogin = {
-  status: number,
+type Indexable = {
+  status: number;
+};
+
+export type ResponseLogin = Indexable & {
   message: {
     user: Omit<User, 'password'>,
     token: string,
   }
 };
 
-export type NormalResponse = {
-  status: number,
+export type NormalResponse = Indexable & {
   message: string,
+};
+
+export type ClubsResponse = Indexable & {
+  message: ClubsType[],
 };
