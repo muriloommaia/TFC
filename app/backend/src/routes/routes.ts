@@ -17,7 +17,7 @@ router.post('/login', async (req, res, next) => {
   await loginController.startLogin(req, res, next);
 });
 
-router.use(authenticateToken);
+// router.use(authenticateToken);
 
 router.get('/clubs', async (req, res, next) => {
   await clubsController.findAll(req, res, next);
