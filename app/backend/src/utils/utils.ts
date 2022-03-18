@@ -12,6 +12,7 @@ enum MessagesStatus {
   allFieldsFilled = 'All fields must be filled',
   tokenNotFound = 'Token not found',
   invalidToken = 'invalid token',
+  clubNotFound = 'Club not found',
 }
 
 export {

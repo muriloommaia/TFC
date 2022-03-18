@@ -65,4 +65,85 @@ describe('Testes da rota /clubs', () => {
       expect(chaiHttpResponse.body).deep.equal(clubsFindAllMock);
     });
   })
+  describe('findById verification', () => {
+    let token: string;
+    before(async () => {
+      Sinon
+        .stub(Clubs, "findByPk")
+        .resolves(clubsFindAllMock[0] as unknown as Model<ClubsType>);
+
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send(correctLogin);
+
+      token = chaiHttpResponse.body.token;
+    });
+
+    after(() => {
+      (Clubs.findByPk as sinon.SinonStub).restore();
+    })
+
+    it('Verify when the token is invalid', async () => {
+      chaiHttpResponse = await chai
+        .request(app)
+        .get('/clubs/1')
+        .set('Authorization', invalidToken);
+      expect(chaiHttpResponse.status).to.be.equal(StatusCode.badRequest);
+      expect(chaiHttpResponse.body).to.be.a.property('message');
+      expect(chaiHttpResponse.body.message).to.be.equal(MessagesStatus.invalidToken);
+    });
+    it('Verify when the token doesn\'t exist', async () => {
+      chaiHttpResponse = await chai
+        .request(app)
+        .get('/clubs/1')
+      expect(chaiHttpResponse.status).to.be.equal(StatusCode.badRequest);
+      expect(chaiHttpResponse.body).to.be.a.property('message');
+      expect(chaiHttpResponse.body.message).to.be.equal(MessagesStatus.tokenNotFound);
+    });
+
+    it('Verify if return is correct', async () => {
+      chaiHttpResponse = await chai
+        .request(app)
+        .get('/clubs/1')
+        .set('Authorization', token);
+
+      expect(chaiHttpResponse.status).to.be.equal(StatusCode.ok);
+      expect(chaiHttpResponse.body).to.be.a.property('id');
+      expect(chaiHttpResponse.body).to.be.a.property('clubName');
+      expect(chaiHttpResponse.body.clubName).to.be.equal(clubsFindAllMock[0].clubName);
+      expect(chaiHttpResponse.body.id).to.be.equal(clubsFindAllMock[0].id);
+    });
+  });
+  describe('findById verification', () => {
+    let token: string;
+    before(async () => {
+      Sinon
+        .stub(Clubs, "findByPk")
+        .resolves(null as unknown as Model<ClubsType>);
+
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send(correctLogin);
+
+      token = chaiHttpResponse.body.token;
+    });
+
+    after(() => {
+      (Clubs.findByPk as sinon.SinonStub).restore();
+    })
+
+    it('Verify bad request status when the id club doesn\'t exist', async () => {
+      chaiHttpResponse = await chai
+        .request(app)
+        .get('/clubs/50')
+        .set('Authorization', token);
+
+      expect(chaiHttpResponse.status).to.be.equal(StatusCode.badRequest);
+      expect(chaiHttpResponse.body.message).to.be.equal(MessagesStatus.clubNotFound);
+    });
+
+  });
+
 });
