@@ -1,4 +1,8 @@
-import { IModelSequelizeClubs } from './database/interfaces/ModelsSequelize';
+/* eslint-disable @typescript-eslint/comma-dangle */
+import {
+  IModelSequelizeClubs,
+  IModelSequelizeMatches
+} from './database/interfaces/ModelsSequelize';
 
 export type Indexable = {
   id: number
@@ -19,3 +23,5 @@ export type User = Entity & {
 export type LoginUser = Omit<User, keyof Entity>;
 
 export type ClubsType = IModelSequelizeClubs;
+
+export type MatchesType = IModelSequelizeMatches;
