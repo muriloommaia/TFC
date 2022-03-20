@@ -3,6 +3,7 @@ enum StatusCode {
   ok = 200,
   internalServerError = 500,
   unauthorized = 401,
+  created = 201,
 }
 
 enum MessagesStatus {

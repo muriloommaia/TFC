@@ -12,3 +12,11 @@ export const schemaLogin = Joi.object().keys({
   'string.empty': MessagesStatus.allFieldsFilled,
   'string.min': MessagesStatus.incorrectPassword,
 });
+
+export const schemaCreateMatch = Joi.object().keys({
+  homeTeam: Joi.number().required(),
+  homeTeamGoals: Joi.number().required(),
+  awayTeam: Joi.number().required(),
+  awayTeamGoals: Joi.number().required(),
+  inProgress: Joi.boolean().required(),
+});
