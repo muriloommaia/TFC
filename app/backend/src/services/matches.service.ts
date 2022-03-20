@@ -13,4 +13,12 @@ export default class MatchesService {
       message: response,
     };
   }
+
+  async findAllProgress(bool: boolean): Promise<ResponseService<MatchesType[]>> {
+    const response = await this.model.findAllProgress(bool);
+    return {
+      status: StatusCode.ok,
+      message: response,
+    };
+  }
 }

@@ -21,4 +21,24 @@ export default class MatchesModel {
       ],
     }) as unknown as MatchesType[];
   }
+
+  async findAllProgress(bool: boolean): Promise<MatchesType[]> {
+    return await Matches.findAll({
+      where: {
+        inProgress: bool,
+      },
+      include: [
+        {
+          model: Clubs,
+          as: 'homeClub',
+          attributes: ['clubName'],
+        },
+        {
+          model: Clubs,
+          as: 'awayClub',
+          attributes: ['clubName'],
+        },
+      ],
+    }) as unknown as MatchesType[];
+  }
 }
