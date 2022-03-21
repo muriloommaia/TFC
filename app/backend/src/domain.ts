@@ -5,7 +5,7 @@ import {
 } from './database/interfaces/ModelsSequelize';
 
 export type Indexable = {
-  id: number
+  id?: number
 };
 
 export type Entity = Indexable & {
@@ -25,6 +25,15 @@ export type LoginUser = Omit<User, keyof Entity>;
 export type ClubsType = IModelSequelizeClubs;
 
 export type MatchesType = IModelSequelizeMatches;
+
+export type MatchesTypeReturn = MatchesType & {
+  homeClub: {
+    clubName: string
+  },
+  awayClub: {
+    clubName: string
+  },
+};
 
 export type MatchesGoalT = Indexable & {
   homeTeamGoals: number

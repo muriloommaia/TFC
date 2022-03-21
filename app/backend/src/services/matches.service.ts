@@ -68,4 +68,13 @@ export default class MatchesService {
       },
     };
   }
+
+  // async allLeaderBoard(): Promise<ResponseService<MatchesTypeReturn[]>> {
+  //   const allMatches = await this.model.findAll();
+  //   const response =
+  //   return {
+  //     status: StatusCode.ok,
+  //     message: response,
+  //   };
+  // }
 }
