@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import MatchesService from '../services/matches.service';
-import { verifyCreateMatch } from '../utils/JOI/validationJOI';
+// import { verifyCreateMatch } from '../utils/JOI/validationJOI';
 
 export default class MatchesController {
   constructor(readonly service: MatchesService) { }
@@ -18,9 +18,21 @@ export default class MatchesController {
   }
 
   async createMatch(req: Request, res: Response, _next: NextFunction): Promise<void> {
-    const { body } = req;
-    const validate = await verifyCreateMatch(body);
-    const { status, message } = await this.service.createMatch(validate);
+    const body = {
+      homeTeam: req.body.homeTeam,
+      awayTeam: req.body.awayTeam,
+      inProgress: req.body.inProgress,
+      homeTeamGoals: req.body.homeTeamGoals,
+      awayTeamGoals: req.body.awayTeamGoals,
+    };
+    // const validate = await verifyCreateMatch(body);
+    const { status, message } = await this.service.createMatch(body);
     res.status(status).json(message);
+  }
+
+  async finishMatch(req: Request, res: Response, _next: NextFunction): Promise<void> {
+    const { id } = req.params;
+    const { status } = await this.service.finishMatch(+id);
+    res.status(status).json({ message: 'Match finished' });
   }
 }
