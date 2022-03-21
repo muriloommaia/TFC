@@ -2,10 +2,10 @@
 /* eslint-disable @typescript-eslint/return-await */
 import Clubs from '../database/models/Clubs';
 import Matches from '../database/models/Matches';
-import { MatchesGoalT, MatchesType } from '../domain';
+import { MatchesGoalT, MatchesType, MatchesTypeReturn } from '../domain';
 
 export default class MatchesModel {
-  async findAll(): Promise<MatchesType[]> {
+  async findAll(): Promise<MatchesTypeReturn[]> {
     return await Matches.findAll({
       include: [
         {
@@ -19,14 +19,14 @@ export default class MatchesModel {
           attributes: ['clubName'],
         },
       ],
-    }) as unknown as MatchesType[];
+    }) as unknown as MatchesTypeReturn[];
   }
 
   // async findById(id: number): Promise<MatchesType> {
   //   return await Matches.findByPk(id) as unknown as MatchesType;
   // }
 
-  async findAllProgress(bool: boolean): Promise<MatchesType[]> {
+  async findAllProgress(bool: boolean): Promise<MatchesTypeReturn[]> {
     return await Matches.findAll({
       where: {
         inProgress: bool,
@@ -43,7 +43,7 @@ export default class MatchesModel {
           attributes: ['clubName'],
         },
       ],
-    }) as unknown as MatchesType[];
+    }) as unknown as MatchesTypeReturn[];
   }
 
   async createMatch(match: MatchesType): Promise<MatchesType> {

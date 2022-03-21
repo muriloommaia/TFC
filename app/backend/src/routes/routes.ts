@@ -42,6 +42,8 @@ router.patch('/matchs/:id/finish', async (req, res, next) => {
   await matchesController.finishMatch(req, res, next);
 });
 
-router.get('/leaderboard');
+router.get('/leaderboard', async (req, res, next) => {
+  await matchesController.leaderBoard(req, res, next);
+});
 
 export default router;

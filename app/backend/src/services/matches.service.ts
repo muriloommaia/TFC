@@ -1,5 +1,6 @@
 import { MatchesGoalT, MatchesType } from '../domain';
 import UnauthorizedError from '../erros/unauthorized.error';
+import { ILeaderBoard, LeaderBoard } from '../helpers';
 import ClubsModel from '../models/clubs.model';
 import MatchesModel from '../models/matches.model';
 import { MessagesStatus, StatusCode } from '../utils/utils';
@@ -69,12 +70,12 @@ export default class MatchesService {
     };
   }
 
-  // async allLeaderBoard(): Promise<ResponseService<MatchesTypeReturn[]>> {
-  //   const allMatches = await this.model.findAll();
-  //   const response =
-  //   return {
-  //     status: StatusCode.ok,
-  //     message: response,
-  //   };
-  // }
+  async allLeaderBoard(): Promise<ResponseService<ILeaderBoard[]>> {
+    const allMatches = await this.model.findAllProgress(false);
+    const response = new LeaderBoard(allMatches);
+    return {
+      status: StatusCode.ok,
+      message: response.leaderboard,
+    };
+  }
 }
