@@ -41,4 +41,8 @@ export default class MatchesModel {
       ],
     }) as unknown as MatchesType[];
   }
+
+  async createMatch(match: MatchesType): Promise<MatchesType> {
+    return await Matches.create(match) as unknown as MatchesType;
+  }
 }

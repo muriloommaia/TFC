@@ -18,3 +18,11 @@ export type NormalResponse = Indexable & {
 export type ResponseService<T> = Indexable & {
   message: T,
 };
+
+export type ValidateMatchCreate = {
+  homeTeam: number;
+  homeGoals: number;
+  awayTeam: number;
+  awayGoals: number;
+  inProgress: boolean;
+};

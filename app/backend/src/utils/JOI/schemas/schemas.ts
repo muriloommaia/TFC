@@ -15,8 +15,8 @@ export const schemaLogin = Joi.object().keys({
 
 export const schemaCreateMatch = Joi.object().keys({
   homeTeam: Joi.number().required(),
-  homeTeamGoals: Joi.number().required(),
+  homeGoals: Joi.number().required(),
   awayTeam: Joi.number().required(),
-  awayTeamGoals: Joi.number().required(),
-  inProgress: Joi.boolean().required(),
+  awayGoals: Joi.number().required(),
+  inProgress: Joi.boolean(),
 });
