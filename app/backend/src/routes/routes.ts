@@ -30,4 +30,8 @@ router.get('/clubs/:id', async (req, res, next) => {
 router.get('/matchs', async (req, res, next) => {
   await matchesController.findAll(req, res, next);
 });
+
+router.post('/matchs', authenticateToken, async (req, res, next) => {
+  await matchesController.createMatch(req, res, next);
+});
 export default router;

@@ -14,6 +14,9 @@ enum MessagesStatus {
   tokenNotFound = 'Token not found',
   invalidToken = 'invalid token',
   clubNotFound = 'Club not found',
+  teamNotFound = 'Team not found',
+  sameTeamMatch = 'It is not possible to create a match with two equal teams',
+  inProgressTrue = 'inProgress must be true',
 }
 
 export {
