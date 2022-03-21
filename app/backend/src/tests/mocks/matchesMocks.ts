@@ -355,3 +355,8 @@ export const createMatchTeamNoExistent = {
   "homeTeamGoals": 2,
   "awayTeamGoals": 2
 }
+
+export const updateMatchGoals = {
+  "homeTeamGoals": 2,
+  "awayTeamGoals": 2
+}

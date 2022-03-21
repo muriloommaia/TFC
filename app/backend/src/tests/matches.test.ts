@@ -8,7 +8,7 @@ import { ClubsType, MatchesType } from '../domain';
 import { MessagesStatus, StatusCode } from '../utils/utils';
 import { oneClub } from './mocks/clubsMocks';
 import { correctLogin } from './mocks/loginMocks';
-import { createMatchCorrect, createMatchProgressFalse, createMatchSameTeam, createMatchSuccess, createMatchTeamNoExistent, matchesFindAllMock, matchesProgressFalse, matchesProgressTrue } from './mocks/matchesMocks';
+import { createMatchCorrect, createMatchProgressFalse, createMatchSameTeam, createMatchSuccess, createMatchTeamNoExistent, matchesFindAllMock, matchesProgressFalse, matchesProgressTrue, updateMatchGoals } from './mocks/matchesMocks';
 import chaiHttp = require('chai-http');
 import Sinon = require('sinon');
 
@@ -204,6 +204,28 @@ describe('Testes da rota /matchs', () => {
 
       expect(chaiHttpResponse.status).to.be.equal(StatusCode.ok);
       expect(chaiHttpResponse.body.message).to.be.equal(MessagesStatus.matchFinished);
+    });
+  });
+  describe('Update a match /matchs/:id/finish', () => {
+    let token: string;
+    before(async () => {
+      Sinon
+        .stub(Matches, "update")
+        .resolves(1 as unknown as [number, Model<MatchesType>[]]);
+    });
+
+    after(() => {
+      (Matches.update as sinon.SinonStub).restore();
+    })
+
+    it('Verify when the club doesn\'t exist', async () => {
+      chaiHttpResponse = await chai
+        .request(app)
+        .patch('/matchs/5')
+        .send(updateMatchGoals)
+
+      expect(chaiHttpResponse.status).to.be.equal(StatusCode.ok);
+      expect(chaiHttpResponse.body).to.be.deep.equal({ id: 5, ...updateMatchGoals });
     });
   });
 });
