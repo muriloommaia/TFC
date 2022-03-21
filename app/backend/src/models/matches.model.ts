@@ -22,9 +22,9 @@ export default class MatchesModel {
     }) as unknown as MatchesType[];
   }
 
-  async findById(id: number): Promise<MatchesType> {
-    return await Matches.findByPk(id) as unknown as MatchesType;
-  }
+  // async findById(id: number): Promise<MatchesType> {
+  //   return await Matches.findByPk(id) as unknown as MatchesType;
+  // }
 
   async findAllProgress(bool: boolean): Promise<MatchesType[]> {
     return await Matches.findAll({
@@ -50,10 +50,11 @@ export default class MatchesModel {
     return await Matches.create(match) as unknown as MatchesType;
   }
 
-  async finishMatch(id: number): Promise<MatchesType> {
-    return await Matches.update(
+  async finishMatch(id: number): Promise<boolean> {
+    await Matches.update(
       { inProgress: false },
       { where: { id } },
-    ) as unknown as MatchesType;
+    ) as unknown as number;
+    return true;
   }
 }

@@ -2,10 +2,13 @@ import * as chai from 'chai';
 import { Model } from 'sequelize/types';
 import { Response } from 'superagent';
 import { app } from '../app';
+import Clubs from '../database/models/Clubs';
 import Matches from '../database/models/Matches';
-import { MatchesType } from '../domain';
-import { StatusCode } from '../utils/utils';
-import { matchesFindAllMock, matchesProgressFalse, matchesProgressTrue } from './mocks/matchesMocks';
+import { ClubsType, MatchesType } from '../domain';
+import { MessagesStatus, StatusCode } from '../utils/utils';
+import { oneClub } from './mocks/clubsMocks';
+import { correctLogin } from './mocks/loginMocks';
+import { createMatchCorrect, createMatchProgressFalse, createMatchSameTeam, createMatchSuccess, createMatchTeamNoExistent, matchesFindAllMock, matchesProgressFalse, matchesProgressTrue } from './mocks/matchesMocks';
 import chaiHttp = require('chai-http');
 import Sinon = require('sinon');
 
@@ -89,6 +92,118 @@ describe('Testes da rota /matchs', () => {
       expect(chaiHttpResponse.body).to.be.a('array');
       expect(chaiHttpResponse.body).to.be.deep.equal(matchesProgressFalse);
 
+    });
+  });
+  describe('POST /matchs', () => {
+    let token: string;
+    before(async () => {
+      Sinon
+        .stub(Matches, "create")
+        .resolves(createMatchSuccess as unknown as Model<MatchesType>);
+
+      Sinon
+        .stub(Clubs, "findByPk")
+        .resolves(null as unknown as Model<ClubsType>);
+
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send(correctLogin)
+      token = chaiHttpResponse.body.token;
+    });
+
+    after(() => {
+      (Matches.create as sinon.SinonStub).restore();
+      (Clubs.findByPk as sinon.SinonStub).restore();
+    })
+
+    it('Verify when te match has the same team', async () => {
+      console.log('token', token);
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/matchs')
+        .send(createMatchSameTeam)
+        .set('Authorization', token)
+
+      expect(chaiHttpResponse.status).to.be.equal(StatusCode.unauthorized);
+      expect(chaiHttpResponse.body.message).to.be.equal(MessagesStatus.sameTeamMatch);
+    });
+    it('Verify when the club doesn\'t exist', async () => {
+      console.log('token', token);
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/matchs')
+        .send(createMatchTeamNoExistent)
+        .set('Authorization', token)
+
+      expect(chaiHttpResponse.status).to.be.equal(StatusCode.unauthorized);
+      expect(chaiHttpResponse.body.message).to.be.equal(MessagesStatus.teamNotFound);
+    });
+  });
+  describe('POST /matchs', () => {
+    let token: string;
+    before(async () => {
+      Sinon
+        .stub(Matches, "create")
+        .resolves(createMatchSuccess as unknown as Model<MatchesType>);
+
+      Sinon
+        .stub(Clubs, "findByPk")
+        .resolves(oneClub as unknown as Model<ClubsType>);
+
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send(correctLogin)
+      token = chaiHttpResponse.body.token;
+    });
+
+    after(() => {
+      (Matches.create as sinon.SinonStub).restore();
+      (Clubs.findByPk as sinon.SinonStub).restore();
+    })
+
+    it('Verify when the progress is false', async () => {
+      console.log('token', token);
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/matchs')
+        .send(createMatchProgressFalse)
+        .set('Authorization', token)
+
+      expect(chaiHttpResponse.status).to.be.equal(StatusCode.unauthorized);
+      expect(chaiHttpResponse.body.message).to.be.equal(MessagesStatus.inProgressTrue);
+    });
+    it('Verify success create', async () => {
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/matchs')
+        .send(createMatchCorrect)
+        .set('Authorization', token)
+
+      expect(chaiHttpResponse.status).to.be.equal(StatusCode.created);
+      expect(chaiHttpResponse.body).to.be.deep.equal(createMatchSuccess);
+    });
+  });
+  describe('PATCH /matchs/:id/finish', () => {
+    let token: string;
+    before(async () => {
+      Sinon
+        .stub(Matches, "update")
+        .resolves(1 as unknown as [number, Model<MatchesType>[]]);
+    });
+
+    after(() => {
+      (Matches.update as sinon.SinonStub).restore();
+    })
+
+    it('Verify when the club doesn\'t exist', async () => {
+      chaiHttpResponse = await chai
+        .request(app)
+        .patch('/matchs/5/finish')
+
+      expect(chaiHttpResponse.status).to.be.equal(StatusCode.ok);
+      expect(chaiHttpResponse.body.message).to.be.equal(MessagesStatus.matchFinished);
     });
   });
 });

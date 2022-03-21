@@ -18,6 +18,7 @@ enum MessagesStatus {
   matchNotFound = 'There is no match with such id!',
   sameTeamMatch = 'It is not possible to create a match with two equal teams',
   inProgressTrue = 'inProgress must be true',
+  matchFinished = 'Match finished',
 }
 
 export {

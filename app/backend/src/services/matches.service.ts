@@ -41,7 +41,7 @@ export default class MatchesService {
     };
   }
 
-  async finishMatch(id: number): Promise<ResponseService<MatchesType>> {
+  async finishMatch(id: number): Promise<ResponseService<boolean>> {
     // const clubTeam = await this.model.findById(id);
     // if (!clubTeam) {
     //   throw new UnauthorizedError(MessagesStatus.matchNotFound);

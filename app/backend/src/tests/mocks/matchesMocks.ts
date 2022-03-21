@@ -314,3 +314,44 @@ export const matchesProgressFalse = [
     }
   }
 ]
+
+export const createMatchSuccess = {
+  "id": 55,
+  "homeTeam": 7,
+  "awayTeam": 8,
+  "inProgress": true,
+  "homeTeamGoals": 2,
+  "awayTeamGoals": 2
+}
+
+export const createMatchCorrect = {
+  "homeTeam": 7,
+  "awayTeam": 8,
+  "inProgress": true,
+  "homeTeamGoals": 2,
+  "awayTeamGoals": 2
+}
+
+export const createMatchSameTeam = {
+  "homeTeam": 8,
+  "awayTeam": 8,
+  "inProgress": true,
+  "homeTeamGoals": 2,
+  "awayTeamGoals": 2
+}
+
+export const createMatchProgressFalse = {
+  "homeTeam": 9,
+  "awayTeam": 8,
+  "inProgress": false,
+  "homeTeamGoals": 2,
+  "awayTeamGoals": 2
+}
+
+export const createMatchTeamNoExistent = {
+  "homeTeam": 789,
+  "awayTeam": 8,
+  "inProgress": true,
+  "homeTeamGoals": 2,
+  "awayTeamGoals": 2
+}
