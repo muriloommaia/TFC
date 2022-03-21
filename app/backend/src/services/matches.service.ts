@@ -1,4 +1,4 @@
-import { MatchesType } from '../domain';
+import { MatchesGoalT, MatchesType } from '../domain';
 import UnauthorizedError from '../erros/unauthorized.error';
 import ClubsModel from '../models/clubs.model';
 import MatchesModel from '../models/matches.model';
@@ -50,6 +50,22 @@ export default class MatchesService {
     return {
       status: StatusCode.ok,
       message: response,
+    };
+  }
+
+  async updateMatch(
+    id: number,
+    matchGoals: Omit<MatchesGoalT, 'id'>,
+  ): Promise<ResponseService<MatchesGoalT>> {
+    const { awayTeamGoals, homeTeamGoals } = matchGoals;
+    await this.model.updateMatch(id, matchGoals);
+    return {
+      status: StatusCode.ok,
+      message: {
+        id,
+        awayTeamGoals,
+        homeTeamGoals,
+      },
     };
   }
 }

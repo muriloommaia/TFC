@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/return-await */
 import Clubs from '../database/models/Clubs';
 import Matches from '../database/models/Matches';
-import { MatchesType } from '../domain';
+import { MatchesGoalT, MatchesType } from '../domain';
 
 export default class MatchesModel {
   async findAll(): Promise<MatchesType[]> {
@@ -56,5 +56,13 @@ export default class MatchesModel {
       { where: { id } },
     ) as unknown as number;
     return true;
+  }
+
+  async updateMatch(id: number, match: Omit<MatchesGoalT, 'id'>): Promise<boolean> {
+    await Matches.update(
+      match,
+      { where: { id } },
+    );
+    return true as unknown as boolean;
   }
 }

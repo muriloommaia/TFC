@@ -35,7 +35,11 @@ router.post('/matchs', authenticateToken, async (req, res, next) => {
   await matchesController.createMatch(req, res, next);
 });
 
+router.patch('/matchs/:id', async (req, res, next) => {
+  await matchesController.updateMatch(req, res, next);
+});
 router.patch('/matchs/:id/finish', async (req, res, next) => {
   await matchesController.finishMatch(req, res, next);
 });
+
 export default router;
