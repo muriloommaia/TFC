@@ -57,8 +57,8 @@ export class LeaderBoard {
   }
 
   private funcDraw(idx: number, goals: number[]) {
-    this.teams[idx].goalsOwn += goals[0];
-    this.teams[idx].goalsFavor += goals[1];
+    this.teams[idx].goalsFavor += goals[0];
+    this.teams[idx].goalsOwn += goals[1];
     this.teams[idx].goalsBalance += goals[0] - goals[1];
     this.teams[idx].totalPoints += 1;
     this.teams[idx].totalGames += 1;
@@ -68,8 +68,8 @@ export class LeaderBoard {
 
   private vicOrLose(idx: number, goals: number[], result: number) {
     const win = result > 0 ? 1 : 0;
-    this.teams[idx].goalsOwn += goals[0];
-    this.teams[idx].goalsFavor += goals[1];
+    this.teams[idx].goalsFavor += goals[0];
+    this.teams[idx].goalsOwn += goals[1];
     this.teams[idx].goalsBalance += result;
     this.teams[idx].totalPoints += win ? 3 : 0;
     this.teams[idx].totalGames += 1;
@@ -102,10 +102,6 @@ export class LeaderBoard {
       }
       this.insertDatas(awayClub, [awayTeamGoals, homeTeamGoals]);
     });
-  }
-
-  private returnResultSort(bool: boolean) {
-    return bool ? 1 : -1;
   }
 
   private makeBoard() {
