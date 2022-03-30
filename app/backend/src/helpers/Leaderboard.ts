@@ -21,7 +21,10 @@ export class LeaderBoard {
 
   private teamsName: string[];
 
-  constructor(private matches: MatchesTypeReturn[]) {
+  constructor(
+    private matches: MatchesTypeReturn[],
+    private typeCalculate: string = 'All',
+  ) {
     this.teams = [];
     this.teamsName = [];
     this.leaderboardCalc();
@@ -37,7 +40,6 @@ export class LeaderBoard {
 
   private insertOneClub(club: string) {
     this.teamsName.push(club);
-    console.log(club);
     this.teams.push({
       name: club,
       totalPoints: 0,
@@ -104,6 +106,31 @@ export class LeaderBoard {
     });
   }
 
+  private async calculateTeamsHome(): Promise<void> {
+    this.matches.forEach((match) => {
+      const { homeClub: { clubName: homeClub },
+        homeTeamGoals,
+        awayTeamGoals } = match;
+      if (!this.teamsName.includes(homeClub)) {
+        this.insertOneClub(homeClub);
+      }
+      this.insertDatas(homeClub, [homeTeamGoals, awayTeamGoals]);
+    });
+  }
+
+  private async calculateTeamsAway(): Promise<void> {
+    this.matches.forEach((match) => {
+      const {
+        homeTeamGoals,
+        awayClub: { clubName: awayClub },
+        awayTeamGoals } = match;
+      if (!this.teamsName.includes(awayClub)) {
+        this.insertOneClub(awayClub);
+      }
+      this.insertDatas(awayClub, [awayTeamGoals, homeTeamGoals]);
+    });
+  }
+
   private makeBoard() {
     this._leaderboard = this.teams.sort((club1, club2) => {
       if (club1.totalPoints < club2.totalPoints) return 1;
@@ -121,70 +148,20 @@ export class LeaderBoard {
   }
 
   private async leaderboardCalc(): Promise<void> {
-    this.calculateAllTeams();
+    switch (this.typeCalculate) {
+      case 'All':
+        this.calculateAllTeams();
+        break;
+      case 'Home':
+        this.calculateTeamsHome();
+        break;
+      case 'Away':
+        this.calculateTeamsAway();
+        break;
+      default:
+        this.calculateAllTeams();
+        break;
+    }
     this.makeBoard();
   }
 }
-
-// const matchesProgressTrue = [
-//   {
-//     id: 41,
-//     homeTeam: 16,
-//     homeTeamGoals: 2,
-//     awayTeam: 9,
-//     awayTeamGoals: 0,
-//     inProgress: true,
-//     homeClub: {
-//       clubName: 'São Paulo',
-//     },
-//     awayClub: {
-//       clubName: 'Internacional',
-//     },
-//   },
-//   {
-//     id: 42,
-//     homeTeam: 6,
-//     homeTeamGoals: 1,
-//     awayTeam: 1,
-//     awayTeamGoals: 0,
-//     inProgress: true,
-//     homeClub: {
-//       clubName: 'Ferroviária',
-//     },
-//     awayClub: {
-//       clubName: 'Avaí/Kindermann',
-//     },
-//   },
-//   {
-//     id: 43,
-//     homeTeam: 11,
-//     homeTeamGoals: 0,
-//     awayTeam: 10,
-//     awayTeamGoals: 5,
-//     inProgress: true,
-//     homeClub: {
-//       clubName: 'Napoli-SC',
-//     },
-//     awayClub: {
-//       clubName: 'Flamengo',
-//     },
-//   },
-//   {
-//     id: 44,
-//     homeTeam: 7,
-//     homeTeamGoals: 2,
-//     awayTeam: 15,
-//     awayTeamGoals: 2,
-//     inProgress: true,
-//     homeClub: {
-//       clubName: 'Flamengo',
-//     },
-//     awayClub: {
-//       clubName: 'São José-SP',
-//     },
-//   },
-// ];
-
-// const matches = new LeaderBoard(matchesProgressTrue);
-
-// console.log(matches.leaderboard);

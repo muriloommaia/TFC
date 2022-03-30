@@ -50,4 +50,14 @@ export default class MatchesController {
     const { status, message } = await this.service.allLeaderBoard();
     res.status(status).json(message);
   }
+
+  async LeaderBoardHome(req: Request, res: Response, _next: NextFunction): Promise<void> {
+    const { status, message } = await this.service.allLeaderBoard('Home');
+    res.status(status).json(message);
+  }
+
+  async LeaderBoardAway(req: Request, res: Response, _next: NextFunction): Promise<void> {
+    const { status, message } = await this.service.allLeaderBoard('Away');
+    res.status(status).json(message);
+  }
 }

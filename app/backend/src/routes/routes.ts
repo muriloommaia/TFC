@@ -46,4 +46,12 @@ router.get('/leaderboard', async (req, res, next) => {
   await matchesController.leaderBoard(req, res, next);
 });
 
+router.get('/leaderboard/home', async (req, res, next) => {
+  await matchesController.LeaderBoardHome(req, res, next);
+});
+
+router.get('/leaderboard/away', async (req, res, next) => {
+  await matchesController.LeaderBoardAway(req, res, next);
+});
+
 export default router;

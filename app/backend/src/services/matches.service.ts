@@ -70,9 +70,9 @@ export default class MatchesService {
     };
   }
 
-  async allLeaderBoard(): Promise<ResponseService<ILeaderBoard[]>> {
+  async allLeaderBoard(typeLeader = 'All'): Promise<ResponseService<ILeaderBoard[]>> {
     const allMatches = await this.model.findAllProgress(false);
-    const response = new LeaderBoard(allMatches);
+    const response = new LeaderBoard(allMatches, typeLeader);
     return {
       status: StatusCode.ok,
       message: response.leaderboard,
