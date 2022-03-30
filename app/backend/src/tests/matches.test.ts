@@ -118,7 +118,6 @@ describe('Testes da rota /matchs', () => {
     })
 
     it('Verify when te match has the same team', async () => {
-      console.log('token', token);
       chaiHttpResponse = await chai
         .request(app)
         .post('/matchs')
@@ -129,7 +128,6 @@ describe('Testes da rota /matchs', () => {
       expect(chaiHttpResponse.body.message).to.be.equal(MessagesStatus.sameTeamMatch);
     });
     it('Verify when the club doesn\'t exist', async () => {
-      console.log('token', token);
       chaiHttpResponse = await chai
         .request(app)
         .post('/matchs')
@@ -164,7 +162,6 @@ describe('Testes da rota /matchs', () => {
     })
 
     it('Verify when the progress is false', async () => {
-      console.log('token', token);
       chaiHttpResponse = await chai
         .request(app)
         .post('/matchs')
